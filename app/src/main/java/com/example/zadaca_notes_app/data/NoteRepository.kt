@@ -1,21 +1,21 @@
 package com.example.zadaca_notes_app.data
 
-class NoteRepository(private val notesData: NotesData) {
-    private var _notes: List<Note>? = null
+class NoteRepository {
+    private val notes = mutableListOf<Note>(Note(123123, "First note"))
+    private var id = 1
 
-    suspend fun getNotes(): Result<List<Note>>  {
-        val currentNotes = _notes
-        currentNotes?.let {
-            return Result.success(it)
-        }
+    fun getNotes(): List<Note> = notes
 
-        return try {
-            val newNotes = notesData.getNotes()
-            _notes = newNotes
-            Result.success(newNotes)
-        } catch (ex : Exception) {
-            Result.failure(ex)
-        }
+    fun updateNote(id:Int, content: String) {
+        notes.find { it -> it.id == id }?.content = content
+    }
+
+    fun addNote(content: String) {
+        notes.add(Note(id++, content))
+    }
+
+    fun deleteNote(id: Int) {
+        notes.removeAll{ it -> it.id == id}
     }
 }
 
