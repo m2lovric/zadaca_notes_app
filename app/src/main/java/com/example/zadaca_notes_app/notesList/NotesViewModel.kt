@@ -9,16 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 class NotesViewModel(private val repository: NoteRepository): ViewModel() {
-    private val _notes = MutableStateFlow<List<Note>>(emptyList())
-    val notes: StateFlow<List<Note>> = _notes
-
-    init {
-        loadNotes()
-    }
-
-    private fun loadNotes() {
-        _notes.value = repository.getNotes()
-    }
+    val notes: StateFlow<List<Note>> = repository.getNotes()
 
     fun addNote(content: String) {
         if(content.isNotBlank()){
@@ -28,7 +19,6 @@ class NotesViewModel(private val repository: NoteRepository): ViewModel() {
 
     fun deleteNote(id: Int) {
         repository.deleteNote(id)
-        loadNotes()
     }
 
     companion object {

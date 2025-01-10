@@ -1,21 +1,26 @@
 package com.example.zadaca_notes_app.data
 
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+
 class NoteRepository {
-    private val notes = mutableListOf<Note>(Note(123123, "First note"))
+    private val _notes = MutableStateFlow<List<Note>>(emptyList())
+    private val notes: StateFlow<List<Note>> = _notes
+
     private var id = 1
 
-    fun getNotes(): List<Note> = notes
+    fun getNotes(): StateFlow<List<Note>> = notes
 
     fun updateNote(id:Int, content: String) {
-        notes.find { it -> it.id == id }?.content = content
+        _notes.value.find { it -> it.id == id }?.content = content
     }
 
     fun addNote(content: String) {
-        notes.add(Note(id++, content))
+        _notes.value += Note(id++, content)
     }
 
     fun deleteNote(id: Int) {
-        notes.removeAll{ it -> it.id == id}
+        _notes.value = _notes.value.filter { it.id != id }
     }
 }
 
