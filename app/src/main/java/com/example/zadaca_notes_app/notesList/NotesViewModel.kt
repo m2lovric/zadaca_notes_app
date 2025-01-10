@@ -5,7 +5,6 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.zadaca_notes_app.data.Note
 import com.example.zadaca_notes_app.data.NoteRepository
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 class NotesViewModel(private val repository: NoteRepository): ViewModel() {
@@ -15,6 +14,10 @@ class NotesViewModel(private val repository: NoteRepository): ViewModel() {
         if(content.isNotBlank()){
             repository.addNote(content)
         }
+    }
+
+    fun updateNote(id: Int, content: String) {
+        repository.updateNote(id, content)
     }
 
     fun deleteNote(id: Int) {
