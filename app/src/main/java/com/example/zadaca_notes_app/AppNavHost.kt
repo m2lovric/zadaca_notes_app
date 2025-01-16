@@ -25,6 +25,8 @@ fun AppNavHost(navController: NavHostController) {
             val noteId = backStackEntry.arguments?.getString("noteId")
             if (noteId != null) {
                 NoteEditScreen(viewEdit, navController, noteId)
+            } else {
+                navController.navigateUp()
             }
         }
     }

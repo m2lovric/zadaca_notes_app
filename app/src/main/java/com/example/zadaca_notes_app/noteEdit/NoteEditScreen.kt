@@ -1,6 +1,5 @@
 package com.example.zadaca_notes_app.noteEdit
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,8 +31,8 @@ import androidx.navigation.NavController
 @Composable
 fun NoteEditScreen(viewModel: NotesEditModel,  navController: NavController, noteId: String ) {
     val notes by viewModel.notes.collectAsState()
-    val currentNoteContent = notes.find { it.id == noteId.toInt() }.let { it?.content }
-    var noteText by remember { mutableStateOf("") }
+    val currentNoteContent = notes.find { it.id == noteId.toInt() }.let { it!!.content }
+    var noteText by remember { mutableStateOf(currentNoteContent) }
 
     Scaffold { paddingValues ->
         Column(
